@@ -1,4 +1,4 @@
-# Projeto-2-de-N1B2
+# Segundo Projeto de N1 2ºBimestreB2
 <strong> Segundo Projeto de N1 </strong><br/>
 Integrantes do grupo:<br/>
 <strong> Nome: </strong>Vinícius de Andrade Barros <strong>RA:</strong>082150366<br/>
