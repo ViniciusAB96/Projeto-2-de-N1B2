@@ -1,0 +1,77 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+*{
+	font-family: 'Carter One', cursive;
+}
+.img-layer{
+	width: 60%;
+	height: 110%;
+	position: absolute;
+	top: 0%; left: 0%;
+	background-image: url('../images/carousel/forma.png');
+	background-size: cover;
+	z-index:0;
+}
+.img-layer .home-content{
+	margin-top: 30%;
+	width: 60%;
+	margin-left: 20%;
+}
+.site-header{
+	position: relative;
+}
+.navbar{
+	position: absolute;	
+	top: 0%;
+	z-index: 2;
+}
+.nav-link{
+	color: black !important;
+}
+.btnInserir{
+	border: none;
+    float: right;
+    height: 50px;
+    width: 50px;
+
+    background: url("../images/Icons/inserir.png") transparent no-repeat;
+    
+    position: relative;
+    top: 50%;
+    left:50%;
+    transform: translateY(-50%);
+
+}
+.btnAlterar{
+	border: none;
+    float: right;
+    height: 50px;
+    width: 50px;
+    background: url("../images/Icons/update.png") transparent no-repeat;
+    
+   	position:relative;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%);
+}
+.btnDeletar{
+	border: none;
+    float: right;
+    height: 50px;
+    width: 50px;
+    background: url("../images/Icons/delete.png") transparent no-repeat;
+ 
+ 	position:relative;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%);
+}
+.form-group.row.but {
+    margin: auto;
+    padding-top: 10px;
+}
+
+
+

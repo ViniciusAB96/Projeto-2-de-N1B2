@@ -1,0 +1,7 @@
+*{color:#fff;}
+.fundo{background:url('../images/fundoFinal.jpg'); width:100%; height: 100vh;}
+.form-container{border:0px solid #fff; padding: 50px 60px; margin-top: 20vh; 
+				-webkit-box-shadow: 4px 6px 9px 6px rgba(0,0,0,0.71);
+-moz-box-shadow: 4px 6px 9px 6px rgba(0,0,0,0.71);
+box-shadow: 4px 6px 9px 6px rgba(0,0,0,0.71);
+}
