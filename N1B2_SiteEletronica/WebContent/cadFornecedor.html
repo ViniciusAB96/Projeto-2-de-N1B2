@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<title>ELETRO NOW</title>
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style1.css">
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		//consultar
+		$("#btnPesquisar").click(function(){
+			debugger;
+			var txtCnpj=$("#fornCnpj").val();
+			
+			$.get("Fornecedor_Api", {cnpj:txtCnpj}, 
+				function(data,status){
+				
+				let JsonObject = JSON.parse(data);
+				
+				if(JsonObject.cnpj != 0){
+																								
+					$("#fornCnpj").val(JsonObject.cnpj);
+					$("#fornRazaoS").val(JsonObject.razaoS);
+					$("#fornEndereco").val(JsonObject.endereco);
+					$("#fornBairro").val(JsonObject.bairro);
+					$("#fornCidade").val(JsonObject.cidade);
+				}				
+				else {
+					$("#fornCnpj").val("");
+					$("#fornRazaoS").val("");
+					$("#fornEndereco").val(""); 
+					$("#fornBairro").val("");
+					$("#fornCidade").val("");
+										
+					alert("Não há dados para este CNPJ !");
+					return;
+					}
+			});
+		});//fim btnPesquizar 
+			
+		//salvar ,
+		$("#btnSalvar").click(function(){
+			debugger
+			var txtCnpj=$("#fornCnpj").val();
+			var txtRazaoS=$("#fornRazaoS").val();
+			var txtEndereco=$("#fornEndereco").val();
+			var txtBairro=$("#fornBairro").val();
+			var txtCidade=$("#fornCidade").val();
+						
+			$.post("Fornecedor_Api",{cnpj:txtCnpj, razaoS:txtRazaoS, endereco:txtEndereco, bairro:txtBairro, cidade:txtCidade},
+			  function(data, status){
+			  alert("Fornecedor salvo na base dados !" + "\nStatus: " + status);
+			});
+		});//fim btnsalvar
+		
+		
+		// deletar  aluno -- ok funcionando !
+		$("#btnDeletar").click(function(){
+			//debugger;
+			var deletar = $("#fornCnpj").val();
+			
+			$.ajax({
+				url :"Fornecedor_Api?id="+ deletar,
+				type: "delete",
+				success: function() {
+					alert("Dados Deletados !");
+				}	
+			});				
+		});//fim btnDeletar
+		
+		//Atualizar dados no banco  
+		$("#btnAtualizar").click(function(){
+			debugger;
+			var txtCnpj=$("#fornCnpj").val();	
+			var txtRazaoS=$("#fornRazaoS").val();
+			var txtEndereco=$("#fornEndereco").val();
+			var txtBairro=$("#fornBairro").val();
+			var txtCidade=$("#fornCidade").val();
+										
+			$.ajax({
+				url:"Fornecedor_Api",
+				method:"put",
+				data:{cnpj:$("#fornCnpj").val(), razaoS:$("#fornRazaoS").val(), endereco:$("#fornEndereco").val(), bairro:$("#fornBairro").val()},
+				dataType:"json",
+				success: function(){
+					alert("Dados do Fornecedor Atualizados !");
+				}
+			});
+			
+		});//fim atualizar
+		
+		
+	}); //fim do script
+	</script>
+</head>
+<body>
+		<header id="main-header">
+			<div class="container">
+				<h1><strong>ELETRO NOW</strong></h1>
+			</div>
+		</header>
+		<nav id="navbar">
+			<div class="container">
+				<ul>
+					<li><a href="index.html">Home</a></li>	
+					<li><a href="cadCliente.html">Cadastro Cliente</a></li>
+					<li><a href="cadFornecedor.html">Cadastro Fornecedor</a></li>
+					<li><a href="cadComponente.html">Cadastro Componente</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<section id="showcase">
+			<div class="container">
+				
+			</div>
+		</section>
+		<form class="my-form">
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">CNPJ :</span>
+				<input type="text" id="fornCNPJ" placeholder=" 11.154.546/0001-89">
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Razão Social :</span>
+				<input type="text" id="fornRazaoS" placeholder=" RR Componentes ltda.">
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Endereço :</span>
+				<input type="text" id="fornEndereco" placeholder=" Jose Bonifácio, 38">
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Bairro :</span>
+				<input type="text" id="fornBairro" placeholder=" Jd Hortencias"/>
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Cidade.:</span>
+				<input type="text" id="fornCidade" placeholder=" São Carlos"/>
+			</div>
+			
+			<div id="buttonCenter">
+				<input class="btn btn-warning" id="btnDeletar"   value="Deletar">
+				<input class="btn btn-primary" id="btnSalvar"    value="Salvar">
+				<input class="btn btn-primary" id="btnAtualizar" value="Atualizar">
+				<input class="btn btn-primary" id="btnPesquisar" value="Pesquisar">
+			</div>
+		</form>
+		<footer id="main-footer">
+			<p>Copyright &copy; 2018 FTT - ELETRO NOW</p>
+		</footer>
+</body>
+</html>

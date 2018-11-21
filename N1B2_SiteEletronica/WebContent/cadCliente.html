@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<title>EtetroNOW</title>
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style1.css">
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+			// deletar  Cliente
+			$("#btnDeletar").click(function(){
+				//debugger;
+				var deletar = $("#clienteCpf").val();
+				
+				$.ajax({
+					url :"Cliente_Api?cpf="+ deletar,
+					type: "delete",
+					success: function() {
+						alert("Dados Deletados !");
+					}	
+				});				
+			});//fim btnDeletar
+							
+			//consultar cliente
+			$("#btnPesquisar").click(function(){
+				debugger;
+				var txtcpf=$("#clienteCpf").val();
+				
+				$.get("Cliente_Api", {cpf:txtcpf}, 
+					function(data,status){
+					
+					let JsonObject = JSON.parse(data);
+					
+					if(JsonObject.cpf != 0) {				
+																								
+						$("#clienteCpf").val(JsonObject.cpf);
+						$("#clienteNome").val(JsonObject.nome);
+						$("#clienteEndereco").val(JsonObject.endereco); 
+						$("#clienteBairro").val(JsonObject.bairro);	
+						$("#clienteCidade").val(JsonObject.cidade);							
+					}
+					else {
+						$("#clienteCpf").val("");
+						$("#clienteNome").val("");
+						$("#clienteEndereco").val(""); 
+						$("#clienteBairro").val("");
+						$("#clienteCidade").val("");
+						
+						alert("Não há dados para este cpf!");
+						return;
+						}
+				});
+			});//fim btnPesquizar 
+						
+			//salvar dados no banco	-- ok funcionando !
+			$("#btnSalvar").click(function(){
+				var txtCpf=$("#clienteCpf").val();
+				var txtNome=$("#clienteNome").val();
+				var txtEndereco=$("#clienteEndereco").val();
+				var txtBairro=$("#clienteBairro").val();
+				var txtCidade=$("#clienteCidade").val();
+				
+				$.post("ClienteApi",{cpf:txtCpf, nome:txtNome, endereco:txtEndereco, bairro:txtBairro, cidade:txtCidade},
+				  function(data, status){
+				  alert("Cliente foi salvo !" + "\nStatus: " + status);
+				});
+			});//fim btnsalvar
+			
+			//Atualizar dados no banco  
+			$("#btnAtualizar").click(function(){
+				debugger;
+				var txtCpf=$("#clienteCpf").val();	
+				var txtNome=$("#clienteNome").val();
+				var txtEndereco=$("#clienteEndereco").val();
+				var txtBairro=$("#clienteBairro").val();
+				var txtCidade=$("#clienteCidade").val();
+																
+				$.ajax({
+					url:"Cliente",
+					method:"put",
+					//data:{id:txtalunoID, turmaID:txtTurma, name:txtNome, cpf:txtCpf},
+					data:{cpf:$("#clienteCpf").val(), nome:$("#clienteNome").val(), endereco:$("#clienteEndereco").val(), bairro:$("#clienteBairro").val()},
+					dataType:"json",
+					success: function(){
+						alert("Dados do Cliente Atualizados !");
+					}
+				});
+				
+			});//fim atualizar
+						
+	}); //fim do script
+	</script>
+</head>
+<body>
+		<header id="main-header">
+			<div class="container">
+				<h1><strong>ELETRO NOW</strong></h1>
+			</div>
+		</header>
+		<nav id="navbar">
+			<div class="container">
+				<ul>
+					<li><a href="index.html">Home</a></li>	
+					<li><a href="cadCliente.html">Cadastro Cliente</a></li>
+					<li><a href="cadFornecedor.html">Cadastro Fornecedor</a></li>
+					<li><a href="cadComponente.html">Cadastro Componente</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<section id="showcase">
+			<div class="container">
+				
+			</div>
+		</section>
+		<form class="my-form">
+			<div class="input-group mb-4">
+					<span class="input-group-text " id="inputGroup-sizing-md">CPF :</span>
+					<input type="text" id="clienteCpf" autocomplete="off" placeholder=" 123.456.789.99"/>
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Nome :</span>
+				<input type="text" id="clienteNome" value="" placeholder=" Carlos André Luiz"/>
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Endereco :</span>
+				<input type="text" id="clienteEndereco" placeholder=" Rua das Bobinas, 123"/>
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Bairro :</span>
+				<input type="text" id="clienteBairro" min="1" max ="4" placeholder=" Jd Camelias"/>
+			</div>
+			<div class="input-group mb-4">
+				<span class="input-group-text" id="inputGroup-sizing-md">Cidade.:</span>
+				<input type="text" id="clienteCidade" placeholder=" Santo André"/>
+			</div>
+			
+			<div>
+				<input class="btn btn-warning" id="btnDeletar"   value="Deletar"   style="cursor:pointer;">
+				<input class="btn btn-primary" id="btnSalvar"    value="Salvar"    style="cursor:pointer;">			
+				<input class="btn btn-primary" id="btnAtualizar" value="Atualizar" style="cursor:pointer;">
+				<input class="btn btn-primary" id="btnPesquisar" value="Pesquisar" style="cursor:pointer;">
+				
+			</div>
+		</form>
+
+		<footer id="main-footer">
+			<p>Copyright &copy; 2018 FTT - ELETRO NOW</p>
+		</footer>
+</body>
+</html>
